@@ -1,30 +1,42 @@
-"""A guessing game"""
+"""A number-guessing game."""
 
 import random
 
-answer = random.randint(1,100)
+#get player name
+user = input("Hi! What's your name? > ")
 
-#greet user
-print("Hello and welcome to the numbers guessing game."
- "Your job is to guess a number, picked at random, between 1 and 100.")
+#greet player
+print(f"Hi, {user}, welcome to the guessing game.")
 
-guess = " "
+#choose a random number between 1 and 100
+rand_num = random.randint(1, 100)
 
-while guess:
+guess_count = 0
 
-    guess = int(input("Guess a number: "))
+#repeat forever:
+while True:
+    #get guess
+    guess = input("Guess a number between 1-100 > ")
+    try:
+        guess = int(guess)
+    except ValueError:
+        print("That's not a number")
 
-    if guess == answer: 
-        print("You win!")
-        break
+    #validate guess is in range 1-100
+    if guess in range(1,101):
 
-    elif guess < 1 or guess > 100:
-        print("Please pick a number between 1 and 100.")
+        #if guess is incorrect:
+        if guess != rand_num:
+            #give hint
+            if guess > rand_num:
+                print("Guess a lower number")
+            else:
+                print("Guess a higher number")
+            #increase number of guesses
+            guess_count = guess_count + 1
 
-    elif guess < answer:
-        print("Too low, try again!")
-
-    elif guess > answer:
-        print("Too high, try again!")
-
-
+        else:
+            #congratulate player
+            print("Correct! You win!")
+            print(f"You guessed in {guess_count} guesses")
+            break
